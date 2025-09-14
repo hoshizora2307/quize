@@ -34,6 +34,7 @@ const quizScreen = document.getElementById('quiz-screen');
 const resultScreen = document.getElementById('result-screen');
 const startButton = document.getElementById('start-button');
 const questionNumberSpan = document.getElementById('question-number');
+const totalQuestionsSpan = document.getElementById('total-questions');
 const questionText = document.getElementById('question-text');
 const answersDiv = document.getElementById('answers');
 const resultText = document.getElementById('result-text');
@@ -61,6 +62,7 @@ const startQuiz = () => {
     currentQuestionIndex = 0;
     score = 0;
     answeredQuestions = [];
+    totalQuestionsSpan.textContent = quizData.length;
     showScreen(quizScreen);
     displayQuestion();
 };
@@ -89,57 +91,4 @@ const displayQuestion = () => {
 const selectAnswer = (selectedIndex) => {
     const currentQuiz = quizData[currentQuestionIndex];
     const answerButtons = answersDiv.querySelectorAll('.answer-btn');
-    const isCorrect = selectedIndex === currentQuiz.correct;
-
-    answerButtons.forEach((button, index) => {
-        button.disabled = true;
-        if (index === currentQuiz.correct) {
-            button.classList.add('correct');
-        } else if (index === selectedIndex) {
-            button.classList.add('incorrect');
-        }
-    });
-
-    if (isCorrect) {
-        score++;
-    }
-
-    answeredQuestions.push({
-        question: currentQuiz.question,
-        selectedAnswer: currentQuiz.answers[selectedIndex],
-        correctAnswer: currentQuiz.answers[currentQuiz.correct],
-        isCorrect: isCorrect
-    });
-
-    setTimeout(() => {
-        currentQuestionIndex++;
-        displayQuestion();
-    }, 1000);
-};
-
-// 結果画面を表示する関数
-const showResults = () => {
-    showScreen(resultScreen);
-    resultText.textContent = `${quizData.length}問中、${score}問正解！`;
-
-    resultDetailsDiv.innerHTML = '';
-    answeredQuestions.forEach(item => {
-        const p = document.createElement('p');
-        p.textContent = `Q: ${item.question}\nあなたの回答: ${item.selectedAnswer} (${item.isCorrect ? '正解' : '不正解'})`;
-        p.style.color = item.isCorrect ? '#4caf50' : '#f44336';
-        resultDetailsDiv.appendChild(p);
-    });
-    
-    if (score === quizData.length) {
-        prizeMessage.classList.remove('hidden');
-    } else {
-        prizeMessage.classList.add('hidden');
-    }
-};
-
-// イベントリスナー
-startButton.addEventListener('click', startQuiz);
-retryButton.addEventListener('click', startQuiz);
-
-// 初回画面表示
-showScreen(startScreen);
+    const isCorrect = selectedIndex === currentQuiz.correct
