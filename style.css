@@ -162,12 +162,4 @@ header h1 {
 .cute-message::before {
     content: '';
     position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 20px;
-    height: 20px;
-    background-color: #FFC0CB;
-    border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    z-index: -1; /*
+    bottom: -
