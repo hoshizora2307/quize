@@ -137,63 +137,6 @@ header h1 {
     display: none;
 }
 
-.cute-message-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 25px;
-    animation: bounce-in 1s ease-out;
-}
-
-.cute-message {
-    font-family: 'Zen Maru Gothic', sans-serif;
-    font-size: 1.3em;
-    font-weight: bold;
-    background-color: #FFC0CB; /* パステルピンク */
-    color: #4B0082; /* 濃い紫 */
-    padding: 15px 25px;
-    border-radius: 30px; /* 丸みを強調 */
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    margin: 0 10px; /* アイコンとの間隔 */
-}
-
-/* 吹き出しのしっぽ */
-.cute-message::before {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 20px;
-    height: 20px;
-    background-color: #FFC0CB;
-    border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    z-index: -1; /* メッセージの下に配置 */
-}
-
-.bubble-icon {
-    font-size: 1.8em;
-    animation: float-around 3s ease-in-out infinite;
-    display: inline-block;
-}
-
-.bubble-icon:first-child { animation-delay: 0s; }
-.bubble-icon:last-child { animation-delay: 1.5s; }
-
-@keyframes float-around {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-10px) rotate(5deg); }
-    100% { transform: translateY(0); }
-}
-
-.intro-text {
-    font-size: 1.1em;
-    margin-bottom: 30px;
-    color: var(--light-text-color);
-}
-
 .btn {
     background-color: var(--primary-color);
     color: var(--light-text-color);
@@ -428,44 +371,5 @@ footer {
     }
     100% {
         transform: scale(1);
-    }
-}
-
-/* ★★★ 追加: 飛び回る画像のスタイルとアニメーション ★★★ */
-.flying-decoration {
-    position: absolute;
-    width: 80px; /* 画像のサイズを調整 */
-    height: auto;
-    opacity: 0.8;
-    z-index: 0; /* クイズコンテンツの下に配置 */
-    animation: fly-around 20s linear infinite; /* 飛び回るアニメーション */
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); /* 軽く光るエフェクト */
-}
-
-@keyframes fly-around {
-    0% {
-        top: 10%;
-        left: 5%;
-        transform: rotate(0deg) scale(1);
-    }
-    25% {
-        top: 60%;
-        left: 80%;
-        transform: rotate(90deg) scale(1.1);
-    }
-    50% {
-        top: 20%;
-        left: 30%;
-        transform: rotate(180deg) scale(0.9);
-    }
-    75% {
-        top: 80%;
-        left: 10%;
-        transform: rotate(270deg) scale(1.2);
-    }
-    100% {
-        top: 10%;
-        left: 5%;
-        transform: rotate(360deg) scale(1);
     }
 }
