@@ -28,7 +28,6 @@ const quizData = [
 ];
 
 // UI要素の取得
-const quizContainer = document.getElementById('quiz-container');
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
 const resultScreen = document.getElementById('result-screen');
@@ -91,4 +90,58 @@ const displayQuestion = () => {
 const selectAnswer = (selectedIndex) => {
     const currentQuiz = quizData[currentQuestionIndex];
     const answerButtons = answersDiv.querySelectorAll('.answer-btn');
-    const isCorrect = selectedIndex === currentQuiz.correct
+    const isCorrect = selectedIndex === currentQuiz.correct;
+
+    answerButtons.forEach((button, index) => {
+        button.disabled = true;
+        if (index === currentQuiz.correct) {
+            button.classList.add('correct');
+        } else if (index === selectedIndex) {
+            button.classList.add('incorrect');
+        }
+    });
+
+    if (isCorrect) {
+        score++;
+    }
+
+    answeredQuestions.push({
+        question: currentQuiz.question,
+        selectedAnswer: currentQuiz.answers[selectedIndex],
+        correctAnswer: currentQuiz.answers[currentQuiz.correct],
+        isCorrect: isCorrect
+    });
+
+    setTimeout(() => {
+        currentQuestionIndex++;
+        displayQuestion();
+    }, 1000);
+};
+
+// 結果画面を表示する関数
+const showResults = () => {
+    showScreen(resultScreen);
+    resultText.textContent = `${quizData.length}問中、${score}問正解！`;
+
+    resultDetailsDiv.innerHTML = '';
+    answeredQuestions.forEach(item => {
+        const p = document.createElement('p');
+        p.textContent = `Q: ${item.question}\nあなたの回答: ${item.selectedAnswer} (${item.isCorrect ? '正解' : '不正解'})`;
+        p.style.color = item.isCorrect ? 'var(--correct-color)' : 'var(--incorrect-color)';
+        resultDetailsDiv.appendChild(p);
+    });
+    
+    // 全問正解の場合のメッセージ
+    if (score === quizData.length) {
+        prizeMessage.classList.remove('hidden');
+    } else {
+        prizeMessage.classList.add('hidden');
+    }
+};
+
+// イベントリスナーの設定
+startButton.addEventListener('click', startQuiz);
+retryButton.addEventListener('click', startQuiz);
+
+// 初回画面表示
+showScreen(startScreen);
