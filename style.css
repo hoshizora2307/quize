@@ -22,18 +22,19 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     display: flex;
+    flex-direction: column; /* 要素を縦に並べる */
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    /* min-height: 100vh; を削除 */
     padding: 20px;
     box-sizing: border-box;
-    overflow: hidden; /* 背景の星がはみ出さないように */
+    /* overflow: hidden; を削除 */
     position: relative;
 }
 
 /* キラキラ背景 */
 .star-background {
-    position: absolute;
+    position: fixed; /* 画面に固定 */
     top: 0;
     left: 0;
     width: 100%;
@@ -136,32 +137,6 @@ header h1 {
 .screen.hidden {
     display: none;
 }
-
-/* ★★★ かわいくしたメッセージのCSS ★★★ */
-.cute-message {
-    font-family: 'Zen Maru Gothic', sans-serif;
-    font-size: 1.5em; /* フォントを大きく */
-    font-weight: bold;
-    color: #fff;
-    padding: 15px 20px;
-    border-radius: 30px;
-    background: linear-gradient(45deg, #ff7e5f, #feb47b); /* グラデーション背景 */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    display: inline-block;
-    animation: pop-in 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* 弾むようなアニメーション */
-}
-
-@keyframes pop-in {
-    0% { transform: scale(0); opacity: 0; }
-    80% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); }
-}
-
-/* 国名の色を調整 */
-.vietnam { color: #FF4500; } /* ベトナム: 赤 */
-.china { color: #FFD700; }   /* 中国: 金 */
-.indonesia { color: #FF6347; } /* インドネシア: オレンジがかった赤 */
-.nepal { color: #00BFFF; }   /* ネパール: 青 */
 
 .btn {
     background-color: var(--primary-color);
@@ -342,60 +317,4 @@ header h1 {
 
 @keyframes sparkle {
     0% { transform: scale(1); text-shadow: none; }
-    50% { transform: scale(1.2); text-shadow: 0 0 15px #fff, 0 0 20px #FFD700; }
-    100% { transform: scale(1); text-shadow: none; }
-}
-
-/* フッター */
-footer {
-    font-size: 0.8em;
-    color: #bbb;
-    margin-top: 30px;
-    font-family: 'Roboto Mono', monospace; /* プログラマーらしいフォント */
-    line-height: 1.5;
-}
-
-/* アニメーション */
-.pulse-animation {
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.bounce-animation {
-    animation: bounce 0.8s ease-out;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-15px);
-    }
-    60% {
-        transform: translateY(-7px);
-    }
-}
-
-.bounce-in {
-    animation: bounce-in 0.8s ease-out forwards;
-}
-
-@keyframes bounce-in {
-    0% {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    60% {
-        opacity: 1;
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
+    50% { transform: scale(1.2); text-shadow: 0 0 15
