@@ -1,15 +1,24 @@
+/* Google Fonts */
+/* Mochiy Pop P One (タイトルや強調部分にポップな雰囲気) */
+/* Zen Maru Gothic (本文や読みやすい部分に丸みと優しさ) */
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Zen+Maru+Gothic:wght@400;700&display=swap');
+
 :root {
-    --primary-color: #00bcd4;
-    --background-color: #0d1a26;
-    --card-bg-color: #1a2a3a;
-    --text-color: #e0e6ed;
-    --border-color: #445566;
+    --primary-color: #FF69B4; /* ホットピンク */
+    --secondary-color: #87CEEB; /* スカイブルー */
+    --background-color: #1A0A2A; /* 深い宇宙の紫 */
+    --card-bg-color: #3C1E5C; /* カード背景の紫 */
+    --text-color: #FFF0F5; /* アイボリー */
+    --border-color: #6A3F8B; /* 枠線 */
+    --light-text-color: #F8F8FF; /* 明るいテキスト */
+    --correct-color: #7FFF00; /* 緑 */
+    --incorrect-color: #FF4500; /* 赤 */
+    --star-color: #FFFFE0; /* 明るい黄色 */
 }
 
 body {
     margin: 0;
-    /* 本文用フォント */
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Zen Maru Gothic', sans-serif; /* 本文のフォント */
     background-color: var(--background-color);
     color: var(--text-color);
     display: flex;
@@ -18,32 +27,92 @@ body {
     min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
+    overflow: hidden; /* 背景の星がはみ出さないように */
+    position: relative;
 }
+
+/* キラキラ背景 */
+.star-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: -1; /* クイズコンテンツの下に配置 */
+    animation: twinkle 60s linear infinite; /* 星が流れるアニメーション */
+}
+
+@keyframes twinkle {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; } /* 星が斜めに流れる */
+}
+
+/* 小さな星を生成 */
+.star-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, var(--star-color), transparent),
+        radial-gradient(2px 2px at 40px 70px, var(--star-color), transparent),
+        radial-gradient(2px 2px at 90px 40px, var(--star-color), transparent),
+        radial-gradient(2px 2px at 120px 10px, var(--star-color), transparent),
+        radial-gradient(2px 2px at 150px 80px, var(--star-color), transparent),
+        radial-gradient(2px 2px at 180px 20px, var(--star-color), transparent),
+        radial-gradient(2px 2px at 200px 90px, var(--star-color), transparent),
+        radial-gradient(3px 3px at 50px 100px, var(--star-color), transparent),
+        radial-gradient(3px 3px at 100px 150px, var(--star-color), transparent),
+        radial-gradient(3px 3px at 70px 200px, var(--star-color), transparent),
+        radial-gradient(3px 3px at 170px 120px, var(--star-color), transparent),
+        radial-gradient(3px 3px at 220px 180px, var(--star-color), transparent);
+    background-size: 250px 250px; /* 星の配置間隔 */
+    opacity: 0.7;
+    animation: move-stars 30s linear infinite;
+}
+
+@keyframes move-stars {
+    0% { background-position: 0 0; }
+    100% { background-position: 500px 500px; } /* 星がゆっくり動く */
+}
+
 
 .quiz-container {
     width: 100%;
     max-width: 600px;
     background-color: var(--card-bg-color);
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 25px; /* 角をさらに丸く */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); /* 影を強調 */
     padding: 30px;
     text-align: center;
-    border: 1px solid var(--border-color);
+    border: 3px solid var(--border-color); /* 枠線を太く */
     animation: scale-up 0.5s ease-out forwards;
+    position: relative;
+    z-index: 1; /* コンテンツが背景の星より上に表示されるように */
 }
 
 @keyframes scale-up {
-    from { transform: scale(0.9); opacity: 0; }
+    from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
 header h1 {
-    /* クールなフォント */
-    font-family: 'Roboto Mono', monospace;
-    font-size: 1.8em;
+    font-family: 'Mochiy Pop P One', cursive; /* ポップなフォント */
+    font-size: 2.2em; /* サイズアップ */
     color: var(--primary-color);
-    margin-bottom: 20px;
-    letter-spacing: 2px;
+    margin-bottom: 5px;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitle {
+    font-size: 1.1em;
+    color: var(--secondary-color);
+    margin-top: 0;
+    margin-bottom: 25px;
 }
 
 .fade-in {
@@ -68,116 +137,37 @@ header h1 {
     display: none;
 }
 
-.btn {
-    background-color: var(--primary-color);
-    color: var(--background-color);
-    border: none;
-    padding: 12px 25px;
-    border-radius: 50px;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
-    margin-top: 20px;
-}
-
-.btn:hover {
-    transform: translateY(-3px);
-    background-color: #00a4b9;
-}
-
-.btn:active {
-    transform: translateY(0);
-}
-
-.question-box {
-    background-color: #2b3e50;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    min-height: 80px;
+.cute-message-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 25px;
+    animation: bounce-in 1s ease-out;
 }
 
-.answers {
-    display: grid;
-    gap: 10px;
-}
-
-.answer-btn {
-    background-color: #2b3e50;
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-    padding: 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
-    text-align: left;
-    white-space: normal;
-    word-wrap: break-word;
-}
-
-.answer-btn:hover:not([disabled]) {
-    background-color: #445566;
-    transform: translateY(-2px);
-}
-
-.answer-btn.correct {
-    background-color: #4caf50;
-    border-color: #4caf50;
-    color: #fff;
-}
-
-.answer-btn.incorrect {
-    background-color: #f44336;
-    border-color: #f44336;
-    color: #fff;
-}
-
-.answer-btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.quiz-progress {
-    /* クールなフォント */
-    font-family: 'Roboto Mono', monospace;
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    color: var(--primary-color);
-}
-
-#result-text {
-    font-size: 2em;
-    margin-bottom: 10px;
-    color: #ffd700;
-}
-
-#result-details {
-    font-size: 1.1em;
-    line-height: 1.6;
-}
-
-#prize-message {
-    font-size: 1.4em;
+.cute-message {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 1.3em;
     font-weight: bold;
-    color: #ffd700;
-    margin-top: 30px;
-    animation: pulse 1.5s infinite;
+    background-color: #FFC0CB; /* パステルピンク */
+    color: #4B0082; /* 濃い紫 */
+    padding: 15px 25px;
+    border-radius: 30px; /* 丸みを強調 */
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin: 0 10px; /* アイコンとの間隔 */
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-footer {
-    font-size: 0.8em;
-    color: #888;
-    margin-top: 30px;
-    /* クールなフォント */
-    font-family: 'Roboto Mono', monospace;
-}
+/* 吹き出しのしっぽ */
+.cute-message::before {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 20px;
+    height: 20px;
+    background-color: #FFC0CB;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: -1; /*
