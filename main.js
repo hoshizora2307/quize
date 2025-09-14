@@ -46,6 +46,7 @@ const resultText = document.getElementById('result-text');
 const resultDetailsDiv = document.getElementById('result-details');
 const retryButton = document.getElementById('retry-button');
 const prizeMessage = document.getElementById('prize-message');
+const retryMessage = document.getElementById('retry-message'); // 追加
 
 // ゲームの状態管理
 let currentQuestionIndex = 0;
@@ -137,11 +138,13 @@ const showResults = () => {
         resultDetailsDiv.appendChild(p);
     });
     
-    // 全問正解の場合のメッセージ
+    // 全問正解の場合とそうでない場合でメッセージを切り替え
     if (score === quizData.length) {
         prizeMessage.classList.remove('hidden');
+        retryMessage.classList.add('hidden');
     } else {
         prizeMessage.classList.add('hidden');
+        retryMessage.classList.remove('hidden');
     }
 };
 
