@@ -40,25 +40,11 @@ const resultText = document.getElementById('result-text');
 const resultDetailsDiv = document.getElementById('result-details');
 const retryButton = document.getElementById('retry-button');
 const prizeMessage = document.getElementById('prize-message');
-const highscoreElement = document.getElementById('high-score');
 
 // ゲームの状態管理
 let currentQuestionIndex = 0;
 let score = 0;
 let answeredQuestions = [];
-
-// 最高得点の管理
-let highscore = localStorage.getItem('spaceQuizHighscore') || 0;
-highscoreElement.textContent = highscore;
-
-// 最高得点を更新する関数
-const updateHighscore = () => {
-    if (score > highscore) {
-        highscore = score;
-        localStorage.setItem('spaceQuizHighscore', highscore);
-        highscoreElement.textContent = highscore;
-    }
-};
 
 // 画面を切り替える関数
 const showScreen = (screen) => {
@@ -85,7 +71,7 @@ const displayQuestion = () => {
         const currentQuiz = quizData[currentQuestionIndex];
         questionNumberSpan.textContent = currentQuestionIndex + 1;
         questionText.textContent = currentQuiz.question;
-        answersDiv.innerHTML = ''; // 回答ボタンをクリア
+        answersDiv.innerHTML = '';
 
         currentQuiz.answers.forEach((answer, index) => {
             const button = document.createElement('button');
@@ -105,9 +91,8 @@ const selectAnswer = (selectedIndex) => {
     const answerButtons = answersDiv.querySelectorAll('.answer-btn');
     const isCorrect = selectedIndex === currentQuiz.correct;
 
-    // ボタンの見た目を変更
     answerButtons.forEach((button, index) => {
-        button.disabled = true; // 他のボタンを無効化
+        button.disabled = true;
         if (index === currentQuiz.correct) {
             button.classList.add('correct');
         } else if (index === selectedIndex) {
@@ -129,12 +114,11 @@ const selectAnswer = (selectedIndex) => {
     setTimeout(() => {
         currentQuestionIndex++;
         displayQuestion();
-    }, 1000); // 1秒後に次の問題へ
+    }, 1000);
 };
 
 // 結果画面を表示する関数
 const showResults = () => {
-    updateHighscore();
     showScreen(resultScreen);
     resultText.textContent = `${quizData.length}問中、${score}問正解！`;
 
@@ -146,7 +130,6 @@ const showResults = () => {
         resultDetailsDiv.appendChild(p);
     });
     
-    // 全問正解の場合のメッセージ
     if (score === quizData.length) {
         prizeMessage.classList.remove('hidden');
     } else {
