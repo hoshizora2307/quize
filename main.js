@@ -28,6 +28,7 @@ const quizData = [
 ];
 
 // UI要素の取得
+const quizContainer = document.getElementById('quiz-container');
 const startScreen = document.getElementById('start-screen');
 const quizScreen = document.getElementById('quiz-screen');
 const resultScreen = document.getElementById('result-screen');
