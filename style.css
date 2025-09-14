@@ -27,7 +27,7 @@ body {
     min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
-    overflow: hidden; /* 背景の星がはみ出さないように */
+    /* overflow: hidden; を削除し、スクロール可能に */
     position: relative;
 }
 
@@ -372,13 +372,4 @@ footer {
     100% {
         transform: scale(1);
     }
-}
-
-/* ★★★ 新しく追加したメッセージ用のスタイル ★★★ */
-.retry-text {
-    font-family: 'Zen Maru Gothic', sans-serif;
-    font-size: 1.3em;
-    font-weight: bold;
-    color: var(--secondary-color);
-    margin-top: 20px;
 }
