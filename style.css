@@ -137,6 +137,32 @@ header h1 {
     display: none;
 }
 
+/* ★★★ かわいくしたメッセージのCSS ★★★ */
+.cute-message {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 1.5em; /* フォントを大きく */
+    font-weight: bold;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #ff7e5f, #feb47b); /* グラデーション背景 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    animation: pop-in 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* 弾むようなアニメーション */
+}
+
+@keyframes pop-in {
+    0% { transform: scale(0); opacity: 0; }
+    80% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* 国名の色を調整 */
+.vietnam { color: #FF4500; } /* ベトナム: 赤 */
+.china { color: #FFD700; }   /* 中国: 金 */
+.indonesia { color: #FF6347; } /* インドネシア: オレンジがかった赤 */
+.nepal { color: #00BFFF; }   /* ネパール: 青 */
+
 .btn {
     background-color: var(--primary-color);
     color: var(--light-text-color);
