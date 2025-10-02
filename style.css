@@ -1,437 +1,184 @@
-/* Google Fonts */
-/* Mochiy Pop P One (タイトルや強調部分にポップな雰囲気) */
-/* Zen Maru Gothic (本文や読みやすい部分に丸みと優しさ) */
-@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Zen+Maru+Gothic:wght@400;700&display=swap');
-
-:root {
-    --primary-color: #FF69B4; /* ホットピンク */
-    --secondary-color: #87CEEB; /* スカイブルー */
-    --background-color: #1A0A2A; /* 深い宇宙の紫 */
-    --card-bg-color: #3C1E5C; /* カード背景の紫 */
-    --text-color: #FFF0F5; /* アイボリー */
-    --border-color: #6A3F8B; /* 枠線 */
-    --light-text-color: #F8F8FF; /* 明るいテキスト */
-    --correct-color: #7FFF00; /* 緑 */
-    --incorrect-color: #FF4500; /* 赤 */
-    --star-color: #FFFFE0; /* 明るい黄色 */
-}
-
-body {
-    margin: 0;
-    font-family: 'Zen Maru Gothic', sans-serif; /* 本文のフォント */
-    background-color: var(--background-color);
-    color: var(--text-color);
+body, html {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background: linear-gradient(to bottom, #f0e6ff, #d2f4ff, #a4eaff); /* 明るく可愛らしいグラデーション */
+    color: #333;
     display: flex;
-    flex-direction: column; /* 縦方向に要素を配置し、スクロールを考慮 */
+    justify-content: center;
     align-items: center;
-    min-height: 100vh; /* 常に最低でも画面いっぱいの高さを確保 */
-    padding: 20px;
-    box-sizing: border-box;
-    /* overflow: hidden; を削除し、スクロール可能に */
-    position: relative;
-}
-
-/* キラキラ背景 */
-.star-background {
-    position: fixed; /* 画面に固定 */
-    top: 0;
-    left: 0;
-    width: 100%;
     height: 100%;
-    background: transparent;
-    z-index: -1; /* クイズコンテンツの下に配置 */
-    animation: twinkle 60s linear infinite; /* 星が流れるアニメーション */
-}
-
-@keyframes twinkle {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 100% 100%; } /* 星が斜めに流れる */
-}
-
-/* 小さな星を生成 */
-.star-background::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, var(--star-color), transparent),
-        radial-gradient(2px 2px at 40px 70px, var(--star-color), transparent),
-        radial-gradient(2px 2px at 90px 40px, var(--star-color), transparent),
-        radial-gradient(2px 2px at 120px 10px, var(--star-color), transparent),
-        radial-gradient(2px 2px at 150px 80px, var(--star-color), transparent),
-        radial-gradient(2px 2px at 180px 20px, var(--star-color), transparent),
-        radial-gradient(2px 2px at 200px 90px, var(--star-color), transparent),
-        radial-gradient(3px 3px at 50px 100px, var(--star-color), transparent),
-        radial-gradient(3px 3px at 100px 150px, var(--star-color), transparent),
-        radial-gradient(3px 3px at 70px 200px, var(--star-color), transparent),
-        radial-gradient(3px 3px at 170px 120px, var(--star-color), transparent),
-        radial-gradient(3px 3px at 220px 180px, var(--star-color), transparent);
-    background-size: 250px 250px; /* 星の配置間隔 */
-    opacity: 0.7;
-    animation: move-stars 30s linear infinite;
-}
-
-@keyframes move-stars {
-    0% { background-position: 0 0; }
-    100% { background-position: 500px 500px; } /* 星がゆっくり動く */
-}
-
-/* 浮遊する装飾画像 */
-.flying-decoration {
-    position: fixed; /* 画面に固定 */
-    top: 10%;
-    left: 5%;
-    max-width: 120px; /* 画像の最大幅を制限 */
-    height: auto;
-    z-index: 0; /* クイズコンテナの下、背景の星の上 */
-    animation: animate-flying-image 15s ease-in-out infinite alternate; /* 浮遊アニメーション */
-}
-
-@keyframes animate-flying-image {
-    0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.8;
-    }
-    25% {
-        transform: translate(calc(100vw - 200px), 50px) scale(1.1); /* 右上に移動 */
-        opacity: 0.9;
-    }
-    50% {
-        transform: translate(calc(100vw - 150px), calc(100vh - 200px)) scale(1); /* 右下に移動 */
-        opacity: 0.8;
-    }
-    75% {
-        transform: translate(50px, calc(100vh - 150px)) scale(0.9); /* 左下に移動 */
-        opacity: 0.9;
-    }
-    100% {
-        transform: translate(0, 0) scale(1); /* 元の位置に戻る */
-        opacity: 0.8;
-    }
-}
-
-
-.quiz-container {
-    width: 100%;
-    max-width: 600px;
-    background-color: var(--card-bg-color);
-    border-radius: 25px; /* 角をさらに丸く */
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); /* 影を強調 */
-    padding: 30px;
+    margin: 0;
     text-align: center;
-    border: 3px solid var(--border-color); /* 枠線を太く */
-    animation: scale-up 0.5s ease-out forwards;
+    overflow-x: hidden;
+    overflow-y: auto; /* ここを修正 */
     position: relative;
-    z-index: 1; /* コンテンツが背景の星より上に表示されるように */
-    margin-top: 20px; /* 上部に少し余白 */
-    margin-bottom: 20px; /* 下部に少し余白 */
+    padding: 20px 0;
+    box-sizing: border-box;
 }
 
-@keyframes scale-up {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+.container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 1);
+    max-width: 400px;
+    width: 90%;
+    margin: auto;
+    z-index: 1;
+    position: relative;
+    box-sizing: border-box;
 }
 
 header h1 {
-    font-family: 'Mochiy Pop P One', cursive; /* ポップなフォント */
-    font-size: 2.2em; /* サイズアップ */
-    color: var(--primary-color);
+    color: #6a5acd;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    font-size: 2.2em;
     margin-bottom: 5px;
-    letter-spacing: 3px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
-.subtitle {
-    font-size: 1.1em;
-    color: var(--secondary-color);
-    margin-top: 0;
-    margin-bottom: 25px;
+header p {
+    color: #555;
+    font-size: 0.9em;
 }
 
-.fade-in {
-    animation: fade-in 1s ease-out;
+#star-index-display {
+    padding: 20px 0;
+    border-bottom: 1px dashed #ccc;
+    position: relative;
 }
 
-@keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.screen {
-    animation: fade-out 0.3s ease-in forwards;
-}
-
-.screen.active {
-    animation: fade-in 0.3s ease-out forwards;
-    display: block;
-}
-
-.screen.hidden {
-    display: none;
-}
-
-/* ★★★ かわいくしたメッセージのCSS ★★★ */
-.cute-message {
-    font-family: 'Zen Maru Gothic', sans-serif;
-    font-size: 1.5em; /* フォントを大きく */
+#index-value {
+    font-size: 4.5em;
     font-weight: bold;
-    color: #fff;
-    padding: 15px 20px;
-    border-radius: 30px;
-    background: linear-gradient(45deg, #ff7e5f, #feb47b); /* グラデーション背景 */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    display: inline-block;
-    animation: pop-in 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* 弾むようなアニメーション */
-    margin-bottom: 20px;
+    color: #ff69b4;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes pop-in {
-    0% { transform: scale(0); opacity: 0; }
-    80% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); }
+#index-message {
+    font-size: 1.3em;
+    color: #6a5acd;
+    margin-top: 10px;
 }
 
-/* 国名の色を調整 */
-.vietnam { color: #FF4500; } /* ベトナム: 赤 */
-.china { color: #FFD700; }   /* 中国: 金 */
-.indonesia { color: #FF6347; } /* インドネシア: オレンジがかった赤 */
-.nepal { color: #00BFFF; }   /* ネパール: 青 */
-
-.intro-text {
-    margin-bottom: 20px;
-    font-size: 1.1em;
+#cute-character {
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.5s ease;
+    animation: float-animation 3s ease-in-out infinite alternate;
 }
 
-.btn {
-    background-color: var(--primary-color);
-    color: var(--light-text-color);
-    border: none;
-    padding: 15px 30px;
-    border-radius: 30px; /* 丸みを強調 */
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+@keyframes float-animation {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(-15px) rotate(-5deg); }
+}
+
+#details {
     margin-top: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
 }
 
-.btn:hover {
-    transform: translateY(-5px) scale(1.02);
-    background-color: #FF1493; /* 少し濃いピンク */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
-
-.btn:active {
-    transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-}
-
-/* ボタンのアイコン */
-.btn i {
+#details h2 {
+    color: #555;
     font-size: 1.2em;
+    border-bottom: 2px solid #ff91a4;
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
-/* クイズ進行度 */
-.quiz-progress {
-    font-family: 'Mochiy Pop P One', cursive;
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    color: var(--secondary-color);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+#details p {
+    margin: 5px 0;
+    color: #555;
 }
 
-/* 問題ボックス */
-.question-box {
-    background-color: #5B2C6F; /* 少し明るい紫 */
-    border-radius: 20px; /* 角を丸く */
-    padding: 25px;
-    margin-bottom: 25px;
-    min-height: 100px; /* 高さを少し確保 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    border: 2px dashed var(--secondary-color); /* 点線枠 */
-}
-
-.question-text {
-    font-size: 1.4em;
-    line-height: 1.6;
-    color: var(--light-text-color);
-}
-
-.answers {
-    display: grid;
-    gap: 12px; /* 間隔を広げる */
-}
-
-.answer-btn {
-    background-color: #7B241C; /* 暗めの赤紫 */
-    color: var(--light-text-color);
-    border: 2px solid var(--border-color);
-    padding: 18px; /* パディングを増やす */
-    border-radius: 15px; /* 角を丸く */
+#refresh-btn {
+    padding: 12px 24px;
+    margin-top: 20px;
+    border: none;
+    background-color: #ff91a4;
+    color: white;
+    border-radius: 25px;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    text-align: center; /* 回答を中央寄せ */
     font-size: 1.1em;
-    font-weight: bold;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.answer-btn:hover:not([disabled]) {
-    background-color: #9C3D2B; /* ホバーで明るく */
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+#refresh-btn:hover {
+    transform: scale(1.05);
+    background-color: #ff7f95;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.answer-btn.correct {
-    background-color: var(--correct-color); /* 明るい緑 */
-    border-color: var(--correct-color);
-    color: var(--background-color);
-    animation: correct-bounce 0.5s ease-out;
+footer {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 20px;
 }
 
-@keyframes correct-bounce {
+#takase02 {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    top: 5%;
+    left: 10%;
+    animation: takase-move 20s linear infinite, takase-blink 3s infinite;
+    z-index: 10;
+    object-fit: contain;
+}
+
+#iwaya02 {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    bottom: 5%;
+    right: 15%;
+    animation: iwaya-move 25s linear infinite, iwaya-pulse 4s infinite alternate;
+    z-index: 10;
+    object-fit: contain;
+}
+
+@keyframes takase-move {
+    0% { transform: translate(0vw, 0vh) rotate(0deg); }
+    25% { transform: translate(20vw, 15vh) rotate(30deg); }
+    50% { transform: translate(5vw, 30vh) rotate(-20deg); }
+    75% { transform: translate(30vw, 20vh) rotate(15deg); }
+    100% { transform: translate(0vw, 0vh) rotate(0deg); }
+}
+
+@keyframes takase-blink {
+    0%, 20%, 40%, 60%, 80%, 100% { opacity: 1; }
+    10%, 30%, 50%, 70%, 90% { opacity: 0; }
+}
+
+@keyframes iwaya-move {
+    0% { transform: translate(0vw, 0vh) rotate(0deg); }
+    20% { transform: translate(-15vw, -5vh) rotate(-15deg); }
+    40% { transform: translate(-8vw, -20vh) rotate(10deg); }
+    60% { transform: translate(-25vw, -10vh) rotate(-5deg); }
+    80% { transform: translate(-12vw, -25vh) rotate(20deg); }
+    100% { transform: translate(0vw, 0vh) rotate(0deg); }
+}
+
+@keyframes iwaya-pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
     100% { transform: scale(1); }
 }
 
-.answer-btn.incorrect {
-    background-color: var(--incorrect-color); /* 鮮やかな赤 */
-    border-color: var(--incorrect-color);
-    color: var(--light-text-color);
-    animation: shake 0.3s;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-}
-
-.answer-btn:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-    box-shadow: none;
-}
-
-/* 結果画面 */
-.result-title {
-    font-family: 'Mochiy Pop P One', cursive;
-    font-size: 2.5em; /* 大きく強調 */
-    margin-bottom: 15px;
-    color: #FFD700; /* ゴールド */
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
-}
-
-.result-scroll-box {
-    background-color: #2b143a; /* 結果詳細の背景 */
-    border-radius: 15px;
-    padding: 20px;
-    max-height: 200px; /* スクロール可能にする */
-    overflow-y: auto;
-    margin-bottom: 25px;
-    border: 1px solid var(--border-color);
-    text-align: left;
-    line-height: 1.8;
-}
-
-.result-scroll-box p {
-    margin: 5px 0;
-}
-
-
-#prize-message {
-    font-family: 'Mochiy Pop P One', cursive;
-    font-size: 1.8em;
-    font-weight: bold;
-    color: #FFD700; /* ゴールド */
-    margin-top: 40px;
-    padding: 15px;
-    border: 3px dashed #FFD700; /* 点線枠 */
-    border-radius: 15px;
-    animation: prize-blink 1.5s infinite alternate, pop-up 0.5s ease-out;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-    background: linear-gradient(45deg, #FFD70030, #FFC0CB30); /* 背景グラデーション */
-}
-
-@keyframes prize-blink {
-    0% { opacity: 0.8; }
-    100% { opacity: 1; }
-}
-
-@keyframes pop-up {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-.sparkle-emoji {
-    font-size: 2.5em;
-    display: block;
-    margin-top: 10px;
-    animation: sparkle 1s ease-in-out infinite alternate;
-}
-
-@keyframes sparkle {
-    0% { transform: scale(1); text-shadow: none; }
-    50% { transform: scale(1.2); text-shadow: 0 0 15px #fff, 0 0 20px #FFD700; }
-    100% { transform: scale(1); text-shadow: none; }
-}
-
-/* フッター */
-footer {
-    font-size: 0.8em;
-    color: #bbb;
-    margin-top: 30px;
-    font-family: 'Roboto Mono', monospace; /* プログラマーらしいフォント */
-    line-height: 1.5;
-}
-
-/* アニメーション */
-.pulse-animation {
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.bounce-animation {
-    animation: bounce 0.8s ease-out;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
+@media (max-width: 768px) {
+    #takase02 {
+        width: 60px;
+        height: 60px;
+        top: 2%;
+        left: 5%;
     }
-    40% {
-        transform: translateY(-15px);
-    }
-    60% {
-        transform: translateY(-7px);
+    #iwaya02 {
+        width: 60px;
+        height: 60px;
+        bottom: 2%;
+        right: 5%;
     }
 }
-
-.bounce-in {
-    animation: bounce-in 0.8s ease-out forwards;
-}
-
-@keyframes bounce-in {
-    0% {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    60% {
-        opacity:
